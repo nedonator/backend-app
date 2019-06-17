@@ -1,0 +1,36 @@
+version: '2'
+services:
+    database:
+      container_name: postgres
+      image: postgres:latest
+      env_file: database.conf
+      ports:
+        - 5432:5432
+    rabbitmq:
+      image: "rabbitmq:3-management"
+      ports:
+        - 5672:5672
+    application:
+      restart: always
+      environment:
+       - PYTHONUNBUFFERED=1
+      depends_on:
+       - rabbitmq
+       - database
+      build: 
+        context: "./application"
+      links:
+       - rabbitmq
+       - database
+      ports:
+       - 5000:80
+    mail-handler:
+      restart: always
+      environment:
+       - PYTHONUNBUFFERED=1
+      depends_on:
+       - rabbitmq
+      build: 
+        context: "./mail-handler"
+      links:
+       - rabbitmq
