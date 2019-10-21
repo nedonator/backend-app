@@ -8,6 +8,6 @@ MarkupSafe==1.1.1
 python-dateutil==2.8.0
 python-editor==1.0.4
 six==1.12.0
-Werkzeug==0.14.1
+Werkzeug==0.15.3
 Flask-Mail==0.9.0
 pika
